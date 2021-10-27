@@ -1,26 +1,18 @@
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import static javafx.application.Application.launch;
-
-public class Main extends Application {
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-
-        primaryStage.setTitle("Hello world");
+public class Main extends Application{
+    public void start(Stage primaryStage){
+        primaryStage.setTitle("Runner Solène <3");
         Group root = new Group();
-        Pane pane = new Pane(root);
-        Scene theScene = new Scene(pane, 600, 400,true);
-        primaryStage.setScene(theScene);
-
+        Scene scene = new GameScene(root, 600, 400);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
     public static void main(String[] args) {
         launch(args);
+        // write your code here
     }
 }
