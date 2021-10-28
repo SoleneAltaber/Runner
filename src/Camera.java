@@ -1,14 +1,25 @@
 public class Camera {
-    public Camera (int x, int y) {
+
+    private double x;
+    private double y;
+    private AnimatedThings CentrCam;
+
+
+    public Camera (double x, double y, AnimatedThings CentrCam) {
         this.x = x;
         this.y = y;
+        this.CentrCam=CentrCam;
     }
 
-    public int getX() {
+    public void update(long time){
+        this.x=CentrCam.getX();
+    }
+
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -17,6 +28,5 @@ public class Camera {
         return this.x + "," + this.y;
     }
 
-    private int x;
-    private int y;
+
 }
