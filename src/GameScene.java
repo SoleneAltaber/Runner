@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 
 public class GameScene extends Scene {
 
@@ -16,6 +17,12 @@ public class GameScene extends Scene {
         group.getChildren().add(left.getImage());
         group.getChildren().add(right.getImage());
         group.getChildren().add(perso.getImage());
+        this.setOnKeyPressed(event->{
+        if (event.getCode() == KeyCode.SPACE) {
+            System.out.println("Jump");
+            perso.jump();
+        }
+    });
         render();
 
     }
@@ -37,10 +44,12 @@ public class GameScene extends Scene {
     public void render(){
         double xCam=camera.getX();
         double offsetLeft=xCam%left.getX();
-        System.out.println("Heros en : "+perso.getX());
+        //System.out.println("Heros en : "+perso.getX());
+        System.out.println("Heros en : "+perso.getY());
+        System.out.println("vitesse : "+perso.getyVitess());
         left.getImage().setX(-offsetLeft);
         right.getImage().setX(800-offsetLeft);
-        perso.getImage().setY(400-150);
+        perso.getImage().setY(400-150-perso.getY());
         perso.getImage().setX(perso.getX()-camera.getX());
 
     }
