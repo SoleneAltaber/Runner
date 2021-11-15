@@ -4,6 +4,7 @@ public class Foe extends AnimatedThings {
 
     public Foe(String fileName, double x, double y) {
         super(fileName, x, y);
+
     }
     public void update(long time){
         x=x-2;
