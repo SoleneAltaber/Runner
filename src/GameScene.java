@@ -10,35 +10,13 @@ import java.util.ArrayList;
 
 public class GameScene extends Scene {
 
-    public GameScene(Group group, double v, double v1) {
-        super(group, v, v1);
-        this.v = v;
-        this.v1 = v1;
-        camera = new Camera(1205,0,perso);
-        timer.start();
-        group.getChildren().add(left.getImage());
-        group.getChildren().add(right.getImage());
-        group.getChildren().add(perso.getImage());
-
-        this.setOnKeyPressed(event->{
-            if (event.getCode() == KeyCode.SPACE) {
-                    System.out.println("Jump");
-                    if (perso.jumpnb<2){
-                    perso.jump();}
-                    else {perso.jumpnb=0;}
-
-            }
-        });
-
-        render();
-        }
-
+    // definition des variables
 
     private Camera camera;
     private StaticThings left = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\desert.png",800,600);
     private StaticThings right = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\desert.png",800,600);
     private Hero perso = new Hero("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\heros.png", 300, 0);
-    private Foe mechant = new Foe("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\foe.png", 500, 10);
+    private Foe mechant = new Foe("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\foe.png", 1000, 10);
     private double v;
     private double v1;
     AnimationTimer timer= new AnimationTimer() {
@@ -50,15 +28,52 @@ public class GameScene extends Scene {
         }
     };
 
+    // constructeur
+
+    public GameScene(Group group, double v, double v1) {
+        super(group, v, v1);
+        this.v = v;
+        this.v1 = v1;
+        camera = new Camera(1205,0,perso);
+        timer.start();
+        group.getChildren().add(left.getImage());
+        group.getChildren().add(right.getImage());
+        group.getChildren().add(perso.getImage());
+        group.getChildren().add(mechant.getImage());
+
+        this.setOnKeyPressed(event->{
+
+            if (event.getCode() == KeyCode.SPACE) {
+                    System.out.println("Jump");
+                    if (perso.y<=10.5){
+                            perso.jump();
+                    }
+            }
+        });
+        render();
+    }
+
+ // fonction render
     public void render(){
         double xCam=camera.getX();
         double offsetLeft=xCam%left.getX();
-        System.out.println("y= : "+perso.jumpnb);
         System.out.println("Heros en y: "+perso.getY());
         System.out.println("Heros en x: "+perso.getX());
         System.out.println("mechant en y: "+mechant.getY());
         System.out.println("mechant en x: "+mechant.getX());
         System.out.println("vitesse : "+perso.getyVitess());
+
+        if (perso.getyVitess()>0.2) {       //animation hero monte et descend
+            perso.monte=true;
+            perso.descend=false;}
+        if (perso.getyVitess()<-0.4)
+            {perso.descend=true;
+            perso.monte=false;}
+        if (perso.y<11)
+            {perso.descend=false;
+            perso.monte=false;}
+        if (mechant.getX()<perso.getX()-50){    //réapparaition du monstre à droite
+             mechant.x= perso.getX()+1000;}
         left.getImage().setX(-offsetLeft);
         right.getImage().setX(800-offsetLeft);
         perso.getImage().setY(400-150-perso.getY());
@@ -67,7 +82,5 @@ public class GameScene extends Scene {
         mechant.getImage().setX(mechant.getX()-camera.getX());
 
     }
-
-
 
 }

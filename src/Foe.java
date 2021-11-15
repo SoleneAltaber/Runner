@@ -7,8 +7,9 @@ public class Foe extends AnimatedThings {
     }
     public void update(long time){
         x=x-2;
-        long index= (time/durationFrame)%6;
-        image.setViewport(new Rectangle2D(0,0,50,33));
+        long index= (time/durationFrame)%2;
+        image.setViewport(new Rectangle2D(index*100,0,100,100));
+
 
     }
 
