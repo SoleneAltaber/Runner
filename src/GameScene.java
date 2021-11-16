@@ -20,7 +20,7 @@ public class GameScene extends Scene {
     private Hero perso = new Hero("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\heros1.png", 300, 0);
     private Foe mechant = new Foe("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\foe.png", 1000, 10);
     private StaticThings fin = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fin.png", 50, 1000);
-
+    private boolean jumpok=true;  // on allow l e jump
     private double v;
     private double v1;
     AnimationTimer timer= new AnimationTimer() {
@@ -50,7 +50,7 @@ public class GameScene extends Scene {
         this.setOnKeyPressed(event->{
             if (event.getCode() == KeyCode.SPACE) {
                     System.out.println("Jump");
-                    if (perso.y<=10.5){
+                    if (perso.getY()<=10.5 && jumpok==true){
                             perso.jump();
                     }
             }
@@ -58,11 +58,7 @@ public class GameScene extends Scene {
         render();
 
     }
-    //fonction game over
-    public void gameOver(){
-        if (mechant.getX()<=perso.getX()+10){
-            fin.getImage().setX(100);}// on remet l'image cachée a la bonne place
-    }
+
 
  // fonction render
     public void render(){
@@ -87,12 +83,15 @@ public class GameScene extends Scene {
 
         //game over
 
-        if (mechant.getX()<=perso.getX()+10 && perso.getY()<=mechant.getY()+1 ){        //si on perd on cache tout et on met l'ecran de fin
+        if (mechant.getX()<=perso.getX()+50 && perso.getY()<=mechant.getY()+10 ){        //si on perd? on cache tout et on met l'ecran de fin  et on empeche de sauter sinon le jeu reprend
+
             fin.getImage().setX(100);
             perso.getImage().setX(-1000);
-            perso.getImage().setY(0);
+            perso.getImage().setY(20);
             mechant.getImage().setX(-2000);
-            mechant.getImage().setY(20);}
+            mechant.getImage().setY(100);
+            jumpok=false;
+        }
         else{fin.getImage().setX(-1000);    // sinon on joue
             perso.getImage().setY(400-150-perso.getY());
             perso.getImage().setX(perso.getX()-camera.getX());
