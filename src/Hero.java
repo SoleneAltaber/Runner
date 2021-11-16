@@ -36,7 +36,7 @@ public class Hero extends AnimatedThings{
     }
     public void render(long time){
         time=time/3000000;
-        this.getImage().setImage(new Image("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\heros.png"));
+        this.getImage().setImage(new Image("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\heros1.png"));
 
     }
 
