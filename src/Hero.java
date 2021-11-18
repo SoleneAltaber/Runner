@@ -18,11 +18,11 @@ public class Hero extends AnimatedThings{
         x=x+5;
         long index= (time/durationFrame)%6;
         if (monte==true){
-            image.setViewport(new Rectangle2D(0,160,80,100));}
+            image.setViewport(new Rectangle2D(0,160,85,100));}
         if (descend==true){
-            image.setViewport(new Rectangle2D(85,160,80,100));}
+            image.setViewport(new Rectangle2D(85,160,85,100));}
         if  (descend==false && monte==false){
-        image.setViewport(new Rectangle2D(index*85,0,80,100));}
+        image.setViewport(new Rectangle2D(index*85,0,85,100));}
         y+=yVitess;
         yVitess-=0.5; //gravité
         if(y<10){     // il rebondit un peu en aterrissant
@@ -31,7 +31,7 @@ public class Hero extends AnimatedThings{
         }
     }
     public void jump (){
-        yVitess+=13;  // il saute
+        yVitess+=11;  // il saute
 
     }
     public void render(long time){

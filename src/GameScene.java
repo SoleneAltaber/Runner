@@ -1,12 +1,14 @@
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+import javafx.scene.control.Button;
 
 import java.util.ArrayList;
 
@@ -20,25 +22,32 @@ public class GameScene extends Scene {
     private Hero perso = new Hero("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\heros1.png", 300, 0);
     private Foe mechant = new Foe("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\foe.png", 1000, 10);
     private StaticThings fin = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fin.png", 50, 1000);
-    private boolean jumpok=true;  // on allow l e jump
+    private StaticThings debut = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\debut.png",150,100);
+    private boolean jumpok=true;  // on allow le jump
     private double v;
     private double v1;
+    private boolean debJeu=true;
     AnimationTimer timer= new AnimationTimer() {
         public void handle(long time) {
-            perso.update(time);
-            camera.update(time);
-            mechant.update(time);
-            render();
+
+                perso.update(time);
+                camera.update(time);
+                mechant.update(time);
+                render();
+
         }
     };
 
-    // constructeur
+    //_________________________________________________________________CONSTRUCTEUR__________________________________________________________________________________
+
 
     public GameScene(Group group, double v, double v1) {
+
         super(group, v, v1);
         this.v = v;
         this.v1 = v1;
-        camera = new Camera(1205,0,perso);
+        camera = new Camera(1205, 0, perso);
+
         timer.start();
         group.getChildren().add(left.getImage());
         group.getChildren().add(right.getImage());
@@ -47,29 +56,40 @@ public class GameScene extends Scene {
         group.getChildren().add(fin.getImage());
 
 
-        this.setOnKeyPressed(event->{
-            if (event.getCode() == KeyCode.SPACE) {
-                    System.out.println("Jump");
-                    if (perso.getY()<=10.5 && jumpok==true){
-                            perso.jump();
-                    }
-            }
-        });
-        render();
+    render();
+
+
 
     }
 
+//_____________________________________________________________________METHODE__________________________________________________________________________________
+
+
+
+   // fonction sauter
+   public void sauter(){
+       this.setOnKeyPressed(event->{
+           if (event.getCode() == KeyCode.SPACE) {
+               if (perso.getY()<=10.5 && jumpok==true){
+                   perso.jump();
+               }
+           }
+       });
+
+   }
 
  // fonction render
     public void render(){
         double xCam=camera.getX();
         double offsetLeft=xCam%left.getX();
+
         System.out.println("Heros en y: "+perso.getY());
         System.out.println("Heros en x: "+perso.getX());
         System.out.println("mechant en y: "+mechant.getY());
         System.out.println("mechant en x: "+mechant.getX());
         System.out.println("vitesse : "+perso.getyVitess());
-
+        System.out.println("deb : "+debJeu);
+        sauter();
         if (perso.getyVitess()>0.2) {       //animation hero monte et descend
             perso.monte=true;
             perso.descend=false;}
@@ -83,22 +103,26 @@ public class GameScene extends Scene {
 
         //game over
 
-        if (mechant.getX()<=perso.getX()+50 && perso.getY()<=mechant.getY()+10 ){        //si on perd? on cache tout et on met l'ecran de fin  et on empeche de sauter sinon le jeu reprend
+        if (mechant.getX()<=perso.getX()+50 && perso.getY()<=mechant.getY()+10 ) {        //si on perd? on cache tout et on met l'ecran de fin  et on empeche de sauter sinon le jeu reprend
 
             fin.getImage().setX(100);
             perso.getImage().setX(-1000);
             perso.getImage().setY(20);
             mechant.getImage().setX(-2000);
             mechant.getImage().setY(100);
-            jumpok=false;
+            jumpok = false;
+
         }
+
         else{fin.getImage().setX(-1000);    // sinon on joue
+
             perso.getImage().setY(400-150-perso.getY());
             perso.getImage().setX(perso.getX()-camera.getX());
             mechant.getImage().setY(400-150-mechant.getY());
             mechant.getImage().setX(mechant.getX()-camera.getX());
             if (mechant.getX()<perso.getX()-50){    //réapparaition du monstre à droite
-                mechant.x= perso.getX()+1000;}
+                mechant.x= perso.getX()+1000;
+            }
         } // on cache l'image
 
 
