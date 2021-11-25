@@ -17,19 +17,18 @@ public class GameScene extends Scene {
     // definition des variables
 
     private Camera camera;
-    private StaticThings left = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\desert.png",800,600);
-    private StaticThings right = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\desert.png",800,600);
+    private final StaticThings left = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\desert.png",800,600);
+    private final StaticThings right = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\desert.png",800,600);
     private Hero perso = new Hero("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\heros1.png", 300, 0);
-    private Foe mechant = new Foe("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\foe.png", 1000, 10);
-    private StaticThings fin = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fin.png", 50, 1000);
-    private StaticThings debut = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\debut.png",150,100);
+    private final Foe mechant = new Foe("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\foe.png", 1000, 10);
+    private final StaticThings fin = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fin.png", 400, 400);
+    private final StaticThings debut = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\debut1.png",400,400);
     private boolean jumpok=true;  // on allow le jump
     private double v;
     private double v1;
-    private boolean debJeu=true;
+    public boolean debJeu=true;
     AnimationTimer timer= new AnimationTimer() {
         public void handle(long time) {
-
                 perso.update(time);
                 camera.update(time);
                 mechant.update(time);
@@ -46,21 +45,23 @@ public class GameScene extends Scene {
         super(group, v, v1);
         this.v = v;
         this.v1 = v1;
-        camera = new Camera(1205, 0, perso);
-
-        timer.start();
-        group.getChildren().add(left.getImage());
-        group.getChildren().add(right.getImage());
-        group.getChildren().add(perso.getImage());
-        group.getChildren().add(mechant.getImage());
-        group.getChildren().add(fin.getImage());
-
-
-    render();
+        camera = new Camera(300, 0, perso);
 
 
 
-    }
+            group.getChildren().add(debut.getImage());
+            group.getChildren().add(left.getImage());
+            group.getChildren().add(right.getImage());
+            group.getChildren().add(perso.getImage());
+            group.getChildren().add(mechant.getImage());
+            group.getChildren().add(fin.getImage());
+            timer.start();
+            render();
+        }
+
+
+
+
 
 //_____________________________________________________________________METHODE__________________________________________________________________________________
 
@@ -68,7 +69,16 @@ public class GameScene extends Scene {
 
    // fonction sauter
    public void sauter(){
-       this.setOnKeyPressed(event->{
+       if (perso.getyVitess()>0.2) {       //animation hero monte et descend
+           perso.monte=true;
+           perso.descend=false;}
+       if (perso.getyVitess()<-0.4) {
+           perso.descend=true;
+           perso.monte=false;}
+       if (perso.y<11) {
+           perso.descend=false;
+           perso.monte=false;}
+       this.setOnKeyPressed(event->{   // on saute quand on presse espace
            if (event.getCode() == KeyCode.SPACE) {
                if (perso.getY()<=10.5 && jumpok==true){
                    perso.jump();
@@ -80,30 +90,21 @@ public class GameScene extends Scene {
 
  // fonction render
     public void render(){
+        mechant.debJeu=debJeu;
+        perso.debJeu=debJeu;
         double xCam=camera.getX();
         double offsetLeft=xCam%left.getX();
-
-        System.out.println("Heros en y: "+perso.getY());
-        System.out.println("Heros en x: "+perso.getX());
-        System.out.println("mechant en y: "+mechant.getY());
-        System.out.println("mechant en x: "+mechant.getX());
-        System.out.println("vitesse : "+perso.getyVitess());
-        System.out.println("deb : "+debJeu);
+        System.out.println("left en y: "+left.getY());
+        System.out.println("left en x: "+left.getX());
+        System.out.println("right en y: "+right.getY());
+        System.out.println("right en x: "+right.getX());
+        System.out.println("cam : "+camera.getX());
+        System.out.println("cam : "+camera.getY());
         sauter();
-        if (perso.getyVitess()>0.2) {       //animation hero monte et descend
-            perso.monte=true;
-            perso.descend=false;}
-        if (perso.getyVitess()<-0.4)
-            {perso.descend=true;
-            perso.monte=false;}
-        if (perso.y<11)
-            {perso.descend=false;
-            perso.monte=false;}
-
-
         //game over
-
-        if (mechant.getX()<=perso.getX()+50 && perso.getY()<=mechant.getY()+10 ) {        //si on perd? on cache tout et on met l'ecran de fin  et on empeche de sauter sinon le jeu reprend
+    if(debJeu==false) {
+        debut.getImage().setX(-1000);
+        if (mechant.getX() <= perso.getX() + 50 && perso.getY() <= mechant.getY() + 10) {        //si on perd? on cache tout et on met l'ecran de fin  et on empeche de sauter sinon le jeu reprend
 
             fin.getImage().setX(100);
             perso.getImage().setX(-1000);
@@ -111,26 +112,30 @@ public class GameScene extends Scene {
             mechant.getImage().setX(-2000);
             mechant.getImage().setY(100);
             jumpok = false;
-
         }
-
-        else{fin.getImage().setX(-1000);    // sinon on joue
-
-            perso.getImage().setY(400-150-perso.getY());
-            perso.getImage().setX(perso.getX()-camera.getX());
-            mechant.getImage().setY(400-150-mechant.getY());
-            mechant.getImage().setX(mechant.getX()-camera.getX());
-            if (mechant.getX()<perso.getX()-50){    //réapparaition du monstre à droite
-                mechant.x= perso.getX()+1000;
+        else {
+            fin.getImage().setX(-1000);    // sinon on joue
+            perso.getImage().setY(400 - 150 - perso.getY());
+            perso.getImage().setX(perso.getX() - camera.getX());
+            mechant.getImage().setY(400 - 150 - mechant.getY());
+            mechant.getImage().setX(mechant.getX() - camera.getX());
+            if (mechant.getX() < perso.getX() - 50) {    //réapparaition du monstre à droite
+                mechant.x = perso.getX() + 1000;
+                mechant.Vmechant=mechant.Vmechant+0.25; // on fait accelerer le monstre
             }
-        } // on cache l'image
-
-
+        }
         left.getImage().setX(-offsetLeft);
         right.getImage().setX(800-offsetLeft);
-
-
-
     }
-
+    if (debJeu==true){
+        debut.getImage().setX(100);
+        fin.getImage().setX(-1500);
+        this.setOnKeyPressed(event->{
+            if (event.getCode() == KeyCode.ENTER) {
+                debJeu=false;
+            }
+        });
+    }
+    }
 }
+
