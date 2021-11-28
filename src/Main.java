@@ -1,34 +1,31 @@
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.animation.AnimationTimer;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 
 public class Main extends Application{
     public void start(Stage primaryStage){
-        primaryStage.setTitle("Runner Solène <3");
+
         Group root = new Group();
         Scene scene = new GameScene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
 
+
     }
+
     public static void main(String[] args) {
-        launch(args);
-        // write your code here
+        Application.launch(args);
+
+
     }
 }
-
- //   public void start(Stage primaryStage){
-   //     primaryStage.setTitle("Runner Solène <3");
-     //   Group root = new Group();
-        //Group welcomeGroup = new Group();
-//      Scene scene = new GameScene(root, 600, 400);
-        //Scene welcome = new Scene(welcomeGroup,600,400);
-        //welcomeGroup.getChildren().add(new ImageView(new Image("img/debut1.png")));
-        //primaryStage.setScene(welcome);
-
-  //      primaryStage.setResizable(false);
-    //    primaryStage.show();
-
-    //}
