@@ -14,10 +14,10 @@ public class GameScene extends Scene {
     // definition des variables
 
     private Camera camera;
-    private final StaticThings debut1 = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\debut1.png",400,400);
-    private final StaticThings fin = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fin.png", 400, 400);
-    private final StaticThings left = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fond.png",800,600);
-    private final StaticThings right = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fond.png",800,600);
+    private  StaticThings debut1 = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\debut1.png",600,409);
+    private  StaticThings fin = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fin.png", 400, 400);
+    private  StaticThings left = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fond.png",800,600);
+    private  StaticThings right = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fond.png",800,600);
     private Hero perso = new Hero("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\heros1.png", 300, 0);
     private final Foe mechant = new Foe("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\foe.png", 1000, 10);
     private boolean jumpok=true;  // on allow le jump
@@ -94,7 +94,10 @@ public class GameScene extends Scene {
         sauter();
         //game over
         if (debJeu==true){
-            debut1.getImage().setX(100);
+
+            left.getImage().setX(-1000);
+            right.getImage().setX(-1000);
+            fin.getImage().setX(-1000);
             this.setOnKeyPressed(event->{
                 if (event.getCode() == KeyCode.ENTER) {
                     debJeu=false;
@@ -110,6 +113,8 @@ public class GameScene extends Scene {
             mechant.getImage().setX(-2000);
             mechant.getImage().setY(100);
             jumpok = false;
+            left.getImage().setX(-offsetLeft);
+            right.getImage().setX(800-offsetLeft);
         }
         else {
             fin.getImage().setX(-1000);    // sinon on joue
@@ -117,14 +122,16 @@ public class GameScene extends Scene {
             perso.getImage().setX(perso.getX() - camera.getX());
             mechant.getImage().setY(400 - 150 - mechant.getY());
             mechant.getImage().setX(mechant.getX() - camera.getX());
+            left.getImage().setX(-offsetLeft);
+            right.getImage().setX(800-offsetLeft);
             if (mechant.getX() < perso.getX() - 50) {    //réapparaition du monstre à droite
                 mechant.x = perso.getX() + 1000;
                 mechant.Vmechant=mechant.Vmechant+0.25; // on fait accelerer le monstre
+
             }
         }
-        left.getImage().setX(-offsetLeft);
-        right.getImage().setX(800-offsetLeft);
-        debut1.getImage().setX(100);
+
+
     }
     }
 }
