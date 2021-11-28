@@ -14,12 +14,12 @@ public class GameScene extends Scene {
     // definition des variables
 
     private Camera camera;
+    private final StaticThings debut1 = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\debut1.png",400,400);
+    private final StaticThings fin = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fin.png", 400, 400);
     private final StaticThings left = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fond.png",800,600);
     private final StaticThings right = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fond.png",800,600);
     private Hero perso = new Hero("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\heros1.png", 300, 0);
     private final Foe mechant = new Foe("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\foe.png", 1000, 10);
-    private final StaticThings debut1 = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\debut1.png",400,400);
-    private final StaticThings fin = new StaticThings("C:\\Users\\solen\\Desktop\\soso\\Ecole\\ENSEA_2A\\Runner\\img\\fin.png", 400, 400);
     private boolean jumpok=true;  // on allow le jump
     private double v;
     private double v1;
@@ -124,7 +124,7 @@ public class GameScene extends Scene {
         }
         left.getImage().setX(-offsetLeft);
         right.getImage().setX(800-offsetLeft);
-        //debut1.getImage().setX(-1000);
+        debut1.getImage().setX(100);
     }
     }
 }
