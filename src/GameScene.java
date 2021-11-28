@@ -103,10 +103,10 @@ public class GameScene extends Scene {
         sauter();
         //game over
     if(debJeu==false) {
-        debut.getImage().setX(-1000);
-        if (mechant.getX() <= perso.getX() + 50 && perso.getY() <= mechant.getY() + 10) {        //si on perd? on cache tout et on met l'ecran de fin  et on empeche de sauter sinon le jeu reprend
 
-            fin.getImage().setX(100);
+        if (mechant.getX() <= perso.getX() + 50 && perso.getY() <= mechant.getY() + 10) {        //si on perd? on cache tout et on met l'ecran de fin  et on empeche de sauter sinon le jeu reprend
+            debut.getImage().setX(-1000);
+            fin.getImage().setX(125);
             perso.getImage().setX(-1000);
             perso.getImage().setY(20);
             mechant.getImage().setX(-2000);
@@ -114,6 +114,7 @@ public class GameScene extends Scene {
             jumpok = false;
         }
         else {
+            debut.getImage().setX(-1000);
             fin.getImage().setX(-1000);    // sinon on joue
             perso.getImage().setY(400 - 150 - perso.getY());
             perso.getImage().setX(perso.getX() - camera.getX());
@@ -128,8 +129,8 @@ public class GameScene extends Scene {
         right.getImage().setX(800-offsetLeft);
     }
     if (debJeu==true){
+        fin.getImage().setX(125);
         debut.getImage().setX(100);
-        fin.getImage().setX(-1500);
         this.setOnKeyPressed(event->{
             if (event.getCode() == KeyCode.ENTER) {
                 debJeu=false;
